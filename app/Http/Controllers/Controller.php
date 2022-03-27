@@ -42,6 +42,11 @@ class Controller extends BaseController
                 'title' => 'Bora-Bora',
                 'image' =>$faker->imageUrl(200, 150)
             ],
+            [
+                'id' => 6,
+                'title' => 'Philippines',
+                'image' =>$faker->imageUrl(200, 150)
+            ],
         ];
     }
 
@@ -65,7 +70,7 @@ class Controller extends BaseController
         $data = [];
 
         foreach ($this->getCategory() as $value) {
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 21; $i++) {
                 $id = $i +1;
                 $data[] = [
                     'id' => $id,
