@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ParserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        return view('admin.categories.index');
+        return view('parser.index');
     }
 
     /**
@@ -27,18 +27,38 @@ class CategoryController extends Controller
      */
     public function create(): View|Factory|Application
     {
-        return view('admin.categories.create');
+        return view('parser.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        dd($_REQUEST);
+        $data = $request->all();
+        $saveFile = function(array $data) {
+            $responseData = [];
+            $fileParser = storage_path('app/parser.txt');
+            if(file_exists($fileParser)) {
+                $file = file_get_contents($fileParser);
+                $response = json_decode($file, true);
+            }
+
+            $responseData[] = $data;
+            if(isset($response) && !empty($response)) {
+                $r = array_merge($response, $responseData);
+            }else {
+                $r = $responseData;
+            }
+            file_put_contents($fileParser, json_encode($r));
+        };
+
+        $saveFile($data);
+
+        return redirect()->route('parser.index')->with('success', 'Ваши данные успешно добавлены!');
     }
 
     /**
@@ -55,18 +75,18 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return Application|Factory|View
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit(int $id): View|Factory|Application
+    public function edit($id)
     {
-        return view('admin.categories.edit');
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

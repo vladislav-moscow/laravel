@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class FeedbackController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        return view('admin.categories.index');
+        return view('feedback.index');
     }
 
     /**
@@ -27,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create(): View|Factory|Application
     {
-        return view('admin.categories.create');
+        return view('feedback.create');
     }
 
     /**
@@ -55,12 +54,12 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return Application|Factory|View
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit(int $id): View|Factory|Application
+    public function edit($id)
     {
-        return view('admin.categories.edit');
+        //
     }
 
     /**

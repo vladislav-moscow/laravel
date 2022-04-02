@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ParserController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -18,19 +21,22 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 */
 
 Route::get('/', function () {return view('welcome');});
+
 // Страница категорий
 Route::get('/category', [CategoryController::class, 'index'])->name('category');
 // Страница новостей конкретной категории
 Route::get('/category/{category_id}/news', [NewsController::class, 'index'])->name('categoryNews');
 // Страница отдельной новости
 Route::get('/category/{category_id}/news/{id}', [NewsController::class, 'show'])->where('id', '\d+')->name('showNews');
-// Страница добавления новости
-Route::get('/news_add', [NewsController::class, 'addNews'])->name('add_news');
+Route::resource('feedback', FeedbackController::class);
+Route::resource('parser', ParserController::class);
+
 Route::get('/about', [NewsController::class, 'about'])->name('about');
 Route::get('/discover', [NewsController::class, 'discover'])->name('discover');
 
 // Admin route
 Route::group(['prefix'=> 'admin', 'as' => 'admin.'], function () {
+    Route::get('/', AdminController::class)->name('index');
     Route::resource('categories', AdminCategoryController::class);
     Route::resource('news', AdminNewsController::class);
 });
