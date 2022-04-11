@@ -10,18 +10,18 @@
 @forelse ($newsList as $news)
     <div class="col">
         <div class="card shadow-sm">
-            <img src="{{ $news['image'] }}" alt="photo">
+            <img src="{{ $news-> image }}" alt="photo">
 
             <div class="card-body">
-                <strong><a href=" {{ route('showNews', ['id' => $news['id'], 'category_id' =>$news['category_id'] ]) }} ">{{ $news['title'] }}</a></strong>
-                <p>{{ $news['description'] }}</p>
+                <strong>{{ $news->title }}</strong>
+                <p>{{ $news->description }}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
 
-                        <a href=" {{ route('showNews', ['id' => $news['id'], 'category_id' =>$news['category_id'] ]) }} " class="btn btn-sm btn-outline-secondary"> Подробнее</a>
+                        <a href=" {{ route('showNews', ['category_id' =>$news->categoryTitle, 'id' => $news->id ]) }} " class="btn btn-sm btn-outline-secondary"> Подробнее</a>
                     </div>
-                    <small class="text-muted">Автор: <em>{{ $news['author'] }}</em></small>
-                    <small class="text-muted">Статус:<em>{{ $news['status'] }}</em></small>
+                    <small class="text-muted">Автор: <em>{{ $news->author }}</em></small>
+                    <small class="text-muted">Статус:<em>{{ $news->status }}</em></small>
                 </div>
             </div>
         </div>

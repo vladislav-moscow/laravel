@@ -10,7 +10,32 @@
         </div>
 
     </div>
-    <x-alert type="danger" message="Ошибка"/>
-    <x-alert type="success" message="Успех"/>
-    <x-alert type="info" message="Информация"/>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>#ID</th>
+                <th>Заголовок</th>
+                <th>Описание</th>
+                <th>Опции</th>
+            </tr>
+            </thead>
+            <tbody>
+                @forelse($categories as $category)
+                    <tr>
+                        <td> {{ $category->id }} </td>
+                        <td> {{ $category->title }} </td>
+                        <td> {{ $category->description }} </td>
+                        <td>
+                            <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}">РЕД.</a>
+                            &nbsp;
+                            <a href="javascript:;" style="color:red">УДЛ.</a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr><td colspan="4">Записей нету!</td></tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 @endsection

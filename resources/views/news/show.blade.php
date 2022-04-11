@@ -9,14 +9,14 @@
 @section('content')
     <div class="col">
         <div class="card shadow-sm">
-            <img src="{{ $news['image'] }}" alt="photo">
+            <img src="{{ $news->image }}" alt="photo">
 
             <div class="card-body">
-                <strong>{{ $news['title'] }}</strong>
-                <p>{{ $news['description'] }}</p>
+                <strong>{{ $news->title }}</strong>
+                <p>{{ $news->description }}</p>
                 <div class="d-flex justify-content-between align-items-center">
-                    <small class="text-muted">Автор: <em>{{ $news['author'] }}</em></small>
-                    <small class="text-muted">Статус:<em>{{ $news['status'] }}</em></small>
+                    <small class="text-muted">Автор: <em>{{ $news->author }}</em></small>
+                    <small class="text-muted">Статус:<em>{{ $news->status }}</em></small>
                 </div>
             </div>
         </div>

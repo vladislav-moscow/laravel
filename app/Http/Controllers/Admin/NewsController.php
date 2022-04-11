@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,7 +18,10 @@ class NewsController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        return view('admin.news.index');
+        $news = app(News::class);
+        return view('admin.news.index', [
+            'news' =>$news->getNews()
+        ]);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,7 +18,11 @@ class CategoryController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        return view('admin.categories.index');
+        $category = app(Category::class);
+        return view('admin.categories.index', [
+            'categories' => $category-> getCategories()
+
+        ]);
     }
 
     /**

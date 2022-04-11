@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -11,27 +13,21 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function index(int $id): Factory|View|Application
+    public function index(string $title): Factory|View|Application
     {
-        $allNews = $this->getNews();
-        $news = [];
-
-        foreach ($allNews as $value) {
-            if ($value['category_id'] === $id) {
-                $news[] = $value;
-            }
-        }
+        $news = app(News::class);
 
         return view('news.index', [
-            'newsList' => $news
+            'newsList' => $news->getNews()
         ]);
     }
 
-    public function show(int $id): Factory|View|Application
+    public function show(string $title, int $id): Factory|View|Application
     {
-        $news = $this->getNews($id);
+        $news = app(News::class);
+
         return view("news.show", [
-            'news'=>$news
+            'news'=>$news->getNewsById($id)
         ]);
     }
 

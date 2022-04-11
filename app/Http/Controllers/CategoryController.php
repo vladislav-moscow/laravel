@@ -24,6 +24,7 @@ class CategoryController extends Controller
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -33,8 +34,9 @@ class CategoryController extends Controller
 {
     public function index(): Factory|View|Application
     {
+        $category = app(Category::class);
         return view('category.index', [
-            'categoryArray' => $this->getCategory()
+            'categoryArray' => $category-> getCategoriesView()
         ]);
     }
 }
