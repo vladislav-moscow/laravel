@@ -18,7 +18,7 @@ class NewsController extends Controller
         $news = app(News::class);
 
         return view('news.index', [
-            'newsList' => $news->getNews()
+            'newsList' => $news->getNews(),
         ]);
     }
 
@@ -27,20 +27,7 @@ class NewsController extends Controller
         $news = app(News::class);
 
         return view("news.show", [
-            'news'=>$news->getNewsById($id)
+            'news'=>$news->getNewsById($id),
         ]);
-    }
-
-    public function addNews(): Factory|View|Application
-    {
-        return view('news.add');
-    }
-    public function about(): Factory|View|Application
-    {
-        return view('about');
-    }
-    public function discover(): Factory|View|Application
-    {
-        return view('discover');
     }
 }

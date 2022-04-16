@@ -36,7 +36,7 @@ class CategoryController extends Controller
     {
         $category = app(Category::class);
         return view('category.index', [
-            'categoryArray' => $category-> getCategoriesView()
+            'categoryArray' => $category-> getCategories()
         ]);
     }
 }
