@@ -37,7 +37,7 @@
                     <td>
                         <a href="{{ route('admin.news.edit', ['news' => $news]) }}">РЕД.</a>
                         &nbsp;
-                        <a href="javascript:;" style="color:red">УДЛ.</a>
+                        <a href="javascript:;" class="delete" rel=" {{ $news->id }} " style="color:red">УДЛ.</a>
                     </td>
                 </tr>
             @empty

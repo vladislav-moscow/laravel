@@ -32,7 +32,7 @@
                         <td>
                             <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}">РЕД.</a>
                             &nbsp;
-                            <a href="javascript:;" style="color:red">УДЛ.</a>
+                            <a href="javascript:;" class="delete__category" rel=" {{ $category->id }} " style="color:red">УДЛ.</a>
                         </td>
                     </tr>
                 @empty

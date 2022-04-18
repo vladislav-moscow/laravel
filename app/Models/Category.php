@@ -13,16 +13,7 @@ class Category extends Model
 
     protected $table = "categories";
 
-    public function getCategories(): array
-    {
-        return DB::table($this->table)
-            ->select("id", "title", "image")->get()->toArray();
-    }
 
-    public function getCategoryById(int $id): mixed
-    {
-        return DB::table($this->table)->find($id);
-    }
 
     protected $fillable = [
         'title', 'description'
