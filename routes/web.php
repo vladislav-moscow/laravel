@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ParserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use \App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 /*
@@ -34,17 +37,31 @@ Route::resource('parser', ParserController::class);
 Route::get('/about', [NewsController::class, 'about'])->name('about');
 Route::get('/discover', [NewsController::class, 'discover'])->name('discover');
 
-// Admin route
-Route::group(['prefix'=> 'admin', 'as' => 'admin.'], function () {
-    Route::get('/', AdminController::class)->name('index');
-    Route::resource('categories', AdminCategoryController::class);
-    Route::resource('news', AdminNewsController::class);
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
+        Route::get('/', AccountController::class)->name('index');
+        Route::get('logout',  function () {
+            Auth::logout();
+            return redirect()-> route('login');
+        });
+    });
+
+    // Admin route
+    Route::group(['prefix'=> 'admin', 'as' => 'admin.', 'middleware' => 'admin.check'], function () {
+        Route::get('/', AdminController::class)->name('index');
+        Route::resource('categories', AdminCategoryController::class);
+        Route::resource('news', AdminNewsController::class);
+        Route::resource('users', AdminUserController::class);
+    });
 });
+
+
 
 
 
 //Route::get('/user/{username}', function (string $username) {return "Добро пожаловать в мой проект, {$username}";});
 //Route::get('/info', function () {return "Здесь будет располагаться информация о будущем проекте.";});
 
+Auth::routes();
 
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
