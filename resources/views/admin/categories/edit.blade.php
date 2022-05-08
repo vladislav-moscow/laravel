@@ -12,7 +12,7 @@
     <div class="row">
         @include('inc.messages')
 
-        <form method="post" action="{{ route('admin.categories.update', ['category' => $category]) }}">
+        <form method="post" action="{{ route('admin.categories.update', ['category' => $category]) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="form-group">
@@ -29,3 +29,14 @@
     </div>
 
 @endsection
+
+@push('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush

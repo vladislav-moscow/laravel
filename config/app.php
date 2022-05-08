@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
-return [
+return array(
 
     /*
     |--------------------------------------------------------------------------
@@ -128,6 +128,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
+    | Autoloaded Services Providers
     |--------------------------------------------------------------------------
     |
     | The service providers listed here will be automatically loaded on the
@@ -136,11 +137,13 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => array(
 
         /*
          * Laravel Framework Service Providers...
+         * Laravel Framework Services Providers...
          */
+
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -166,6 +169,7 @@ return [
 
         /*
          * Package Service Providers...
+         * Package Services Providers...
          */
 
         /*
@@ -176,8 +180,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-    ],
+        Orchestra\Parser\XmlServiceProvider::class,
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -190,8 +194,8 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
-        // ...
-    ])->toArray(),
+    'aliases' => Facade::defaultAliases()->merge(array(
+        'XmlParser' => Orchestra\Parser\Xml\Facade::class,
+    ))->toArray(),
 
-];
+);

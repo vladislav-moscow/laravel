@@ -46,5 +46,5 @@ class User extends Authenticatable
         'is_admin' => 'boolean'
     ];
 
-
+    public $timestamps = false;
 }

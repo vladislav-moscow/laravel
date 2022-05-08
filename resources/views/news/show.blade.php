@@ -9,7 +9,7 @@
 @section('content')
     <div class="col">
         <div class="card shadow-sm">
-            <img src="{{ $news->image }}" alt="photo">
+            <img src="{{  Storage::disk('public')->url($n->image) }}" alt="photo">
 
             <div class="card-body">
                 <strong>{{ $news->title }}</strong>

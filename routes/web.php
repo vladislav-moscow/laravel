@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\Admin\ParserController;
+use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\ParserController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -32,7 +34,7 @@ Route::get('/category/{category_id}/news', [NewsController::class, 'index'])->na
 // Страница отдельной новости
 Route::get('/category/{category_id}/news/{id}', [NewsController::class, 'show'])->where('id', '\d+')->name('showNews');
 Route::resource('feedback', FeedbackController::class);
-Route::resource('parser', ParserController::class);
+
 
 Route::get('/about', [NewsController::class, 'about'])->name('about');
 Route::get('/discover', [NewsController::class, 'discover'])->name('discover');
@@ -49,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Admin route
     Route::group(['prefix'=> 'admin', 'as' => 'admin.', 'middleware' => 'admin.check'], function () {
         Route::get('/', AdminController::class)->name('index');
+        Route::get('/parser', ParserController::class)->name('parser');
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('news', AdminNewsController::class);
         Route::resource('users', AdminUserController::class);
@@ -63,5 +66,11 @@ Route::group(['middleware' => 'auth'], function () {
 //Route::get('/info', function () {return "Здесь будет располагаться информация о будущем проекте.";});
 
 Auth::routes();
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/auth/{network}/redirect', [SocialController::class, 'index'])->where('network', '\w+')->name('auth.redirect');
+    Route::get('/auth/{network}/callback', [SocialController::class, 'callback'])->where('network', '\w+')->name('auth.callback');
+});
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -12,7 +12,7 @@
     <div class="row">
         @include('inc.messages')
 
-        <form method="post" action="{{ route('admin.categories.store') }}">
+        <form method="post" action="{{ route('admin.categories.store') }} " enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="title">Название категории</label>

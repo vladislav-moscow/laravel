@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\News\EditRequest;
 use App\Models\Category;
 use App\Models\News;
+use App\Services\UploadService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -97,13 +98,27 @@ class NewsController extends Controller
      */
     public function update(EditRequest $request, News $news): RedirectResponse
     {
-        $status = $news->fill($request->validated())->save();
+       // $status = $news->fill($request->validated())->save();
 
-        if($status) {
+        $validatedData = $request->validated();
+
+        if($request->hasFile('image')) {
+            $service = app(UploadService::class);
+            $validatedData['image'] = $service->uploadFile($request->file('image'));
+        }
+
+        $status = $news->fill($validatedData)->save();
+
+        /*if($status) {
             return redirect()->route('admin.news.index')
                 ->with('success', __('messages.admin.news.update.success'));
         }
-        return back()->with('error',  __('messages.admin.news.update.fail'));
+        return back()->with('error',  __('messages.admin.news.update.fail'));*/
+        if(!$status) {
+            return back()->with('error',  __('messages.admin.news.update.fail'));
+        }
+        return redirect()->route('admin.news.index')
+            ->with('success', __('messages.admin.news.update.success'));
     }
 
     /**
