@@ -14,20 +14,25 @@ class NewsParser implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public string $link;
+
     /**
-     * @param string $link
+     * Create a new job instance.
+     *
+     * @return void
      */
     public function __construct(string $link)
     {
-
+        $this->link = $link;
     }
 
     /**
-     * @param Parser $parser
+     * Execute the job.
+     *
      * @return void
      */
     public function handle(Parser $parser): void
     {
-        $parser->setUrl($this->link)->saveNews();
+        $parser->saveNews($this->link);
     }
 }

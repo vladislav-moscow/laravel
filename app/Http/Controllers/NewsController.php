@@ -13,21 +13,17 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function index(string $title): Factory|View|Application
+    public function index(): Factory|View|Application
     {
-        $news = app(News::class);
-
         return view('news.index', [
-            'newsList' => $news->getNews(),
+            'newsList' => News::paginate(10)
         ]);
     }
 
-    public function show(string $title, int $id): Factory|View|Application
+    public function show(News $news): Factory|View|Application
     {
-        $news = app(News::class);
-
         return view("news.show", [
-            'news'=>$news->getNewsById($id),
+            'news'=>$news
         ]);
     }
 }

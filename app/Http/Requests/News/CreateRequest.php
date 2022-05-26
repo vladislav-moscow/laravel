@@ -34,4 +34,12 @@ class CreateRequest extends FormRequest
             'description' => ['required', 'string'],
         ];
     }
+    public function attributes()
+    {
+        return [
+            'title' => 'заголовок',
+            'description' => 'описание',
+            'author' => 'автор'
+        ];
+    }
 }

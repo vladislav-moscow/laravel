@@ -30,9 +30,9 @@ Route::get('/', function () {return view('welcome');});
 // Страница категорий
 Route::get('/category', [CategoryController::class, 'index'])->name('category');
 // Страница новостей конкретной категории
-Route::get('/category/{category_id}/news', [NewsController::class, 'index'])->name('categoryNews');
+Route::get('/category/news', [NewsController::class, 'index'])->name('categoryNews');
 // Страница отдельной новости
-Route::get('/category/{category_id}/news/{id}', [NewsController::class, 'show'])->where('id', '\d+')->name('showNews');
+Route::get('/category/news/{news}', [NewsController::class, 'show'])->where('news', '\d+')->name('news.show');
 Route::resource('feedback', FeedbackController::class);
 
 
@@ -51,7 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Admin route
     Route::group(['prefix'=> 'admin', 'as' => 'admin.', 'middleware' => 'admin.check'], function () {
         Route::get('/', AdminController::class)->name('index');
-        Route::get('/parser', ParserController::class)->name('parser');
+
+        Route::get('parser', ParserController::class)
+            ->name('parser');
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('news', AdminNewsController::class);
         Route::resource('users', AdminUserController::class);

@@ -5,5 +5,14 @@ namespace App\Contracts;
 
 interface Parser
 {
+    /**
+     * @param string $url
+     * @return $this
+     */
     public function setUrl(string $url): self;
-    public function saveNews(): void;}
+
+    /**
+     * @return void
+     */
+    public function saveNews(): void;
+}

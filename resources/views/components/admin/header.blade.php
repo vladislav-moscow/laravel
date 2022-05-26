@@ -9,4 +9,5 @@
             <a class="nav-link px-3" href="#">Выход</a>
         </div>
     </div>
+    <x-ui.dropDown></x-ui.dropDown>
 </header>

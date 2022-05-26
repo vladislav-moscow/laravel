@@ -49,3 +49,36 @@
         {{ $newsList->links() }}
     </div>
 @endsection
+@push('js')
+    <script>
+        'use strict';
+        document.addEventListener("DOMContentLoaded", () => {
+            const item = document.querySelectorAll(".delete");
+            item.forEach(function (el, index) {
+                el.addEventListener("click", function () {
+                    const id = this.getAttribute("id");
+                    if (confirm(`Подтвердите удаление новости с #ID ${id} ?`)) {
+                        //send id on backend
+                        send(`/admin/news/${id}`).then(() => {
+                            alert("Новость была удалена");
+                            location.reload();
+                        });
+                    }
+                });
+            });
+        });
+        async function send(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content')
+                }
+            });
+            let result = await response.json();
+            return result.ok;
+        }
+    </script>
+@endpush

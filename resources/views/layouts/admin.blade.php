@@ -15,5 +15,6 @@
     <script src="{{ asset('js/feather.min.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/delete.js') }}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 </body>
 </html>

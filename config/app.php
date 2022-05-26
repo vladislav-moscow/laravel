@@ -181,6 +181,7 @@ return array(
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Orchestra\Parser\XmlServiceProvider::class,
+
     ),
 
     /*

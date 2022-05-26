@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         @include('inc.messages')
-        <form method="post" action="{{ route('admin.news.update', ['news'=> $news]) }}">
+        <form method="post" action="{{ route('admin.news.update', ['news'=> $news]) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="form-group">
@@ -57,3 +57,36 @@
     </div>
 
 @endsection
+@push('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'), {
+                toolbar: {
+                    items: [
+                        'heading', '|',
+                        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                        'link', '|',
+                        'outdent', 'indent', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'code', 'codeBlock', '|',
+                        'insertTable', '|',
+                        'ckfinder', 'blockQuote', '|',
+                        'undo', 'redo'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                ckfinder: {
+                    uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
+                    options: {
+                        resourceType: 'Images'
+                    }
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush

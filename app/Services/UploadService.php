@@ -12,7 +12,7 @@ class UploadService
      */
     public function uploadFile(UploadedFile $file): string
     {
-        $completedFile = $file->storeAs('news', $file->hashName(), 'public');
+        $completedFile = $file->storeAs('news',$file->hashName(), 'public');
 
         if(!$completedFile) {
             throw new Exception("File wasn't upload");

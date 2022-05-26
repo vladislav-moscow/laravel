@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts\Parser;
+use App\Contracts\Parser as ContractParser;
 use App\Http\Controllers\Controller;
 use App\Jobs\NewsParser;
 use Illuminate\Contracts\Foundation\Application;
@@ -17,7 +17,7 @@ class ParserController extends Controller
      * @param Request $request
      * @return Application|ResponseFactory|Response
      */
-    public function __invoke(Request $request,Parser $parser): Application|ResponseFactory|Response
+    public function __invoke(Request $request,ContractParser $parser): Application|ResponseFactory|Response
     {
         //dd($parser->setUrl('https://news.yandex.ru/army.rss')->getNews());
         $urls = [

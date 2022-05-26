@@ -18,13 +18,14 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
 
-                        <a href=" {{ route('showNews', ['category_id' =>$news->categoryTitle, 'id' => $news->id ]) }} " class="btn btn-sm btn-outline-secondary"> Подробнее</a>
+                        <a href=" {{ route('news.show', ['news' => $news]) }} " class="btn btn-sm btn-outline-secondary"> Подробнее</a>
                     </div>
                     <small class="text-muted">Автор: <em>{{ $news->author }}</em></small>
                     <small class="text-muted">Статус:<em>{{ $news->status }}</em></small>
                 </div>
             </div>
         </div>
+        {{ $news->links() }}
     </div>
 
 @empty
@@ -32,3 +33,4 @@
  @endforelse
 
 @endsection
+

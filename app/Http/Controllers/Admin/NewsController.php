@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\NewsEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\News\EditRequest;
 use App\Models\Category;
@@ -17,7 +18,7 @@ use Illuminate\Http\RedirectResponse;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Str;
 
 
 class NewsController extends Controller
@@ -31,7 +32,7 @@ class NewsController extends Controller
     {
 
         return view('admin.news.index', [
-            'newsList' =>News::with('category')->paginate(5)
+            'newsList' =>News::with('category')->paginate(10)
         ]);
     }
 
@@ -55,9 +56,18 @@ class NewsController extends Controller
      */
     public function store(EditRequest $request): RedirectResponse
     {
-        $news = News::create($request->validated());
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['title']);
+        if ($request->hasFile('image')){
+            $file = $request->file('image');
+            $fileName = $file->getClientOriginalName();
+            $data['image'] = $file->storeAs('news', $fileName);
+        }
+
+        $news = News::create($data);
 
         if($news) {
+            event(new NewsEvent($news));
             return redirect()->route('admin.news.index')
                 ->with('success', __('messages.admin.news.create.success'));
         }
@@ -83,10 +93,7 @@ class NewsController extends Controller
      */
     public function edit(News $news): Application|Factory|View
     {
-        return view('admin.news.edit', [
-            'news' => $news,
-            'categories' => Category::select("id", "title")->get()
-        ]);
+        return view('admin.news.edit', ['news' => $news]);
     }
 
     /**
@@ -98,7 +105,6 @@ class NewsController extends Controller
      */
     public function update(EditRequest $request, News $news): RedirectResponse
     {
-       // $status = $news->fill($request->validated())->save();
 
         $validatedData = $request->validated();
 

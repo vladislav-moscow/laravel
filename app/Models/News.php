@@ -15,22 +15,6 @@ class News extends Model
 
     protected $table = "news";
 
-    public function getNews():array
-    {
-
-        return DB::table($this->table)
-            ->join('categories', 'news.category_id', '=', 'categories.id')
-            ->select('news.*', 'categories.title as categoryTitle')
-            ->get()
-            ->toArray();
-
-    }
-
-    public function getNewsById(int $id): mixed
-    {
-        return DB::table($this->table)->find($id);
-    }
-
     protected $fillable = [
         'category_id', 'title', 'status', 'author', 'image', 'description'
     ];
